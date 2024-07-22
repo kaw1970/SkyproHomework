@@ -2,6 +2,9 @@ def filter_by_state(list_of_dictionaries: list, key: str = "EXECUTED") -> list:
     """функция принимает список словарей и опционально значение для ключа state (по умолчанию
     'EXECUTED'), возвращает новый список словарей, содержащий только те словари, у которых ключ
     state соответствует указанному значению."""
+    for i in list_of_dictionaries:
+        if not i.get('state'):
+            raise ValueError('Отсутствует ключ для фильтра')
     # new_list_of_dictionaries = []
     # for i in list_of_dictionaries:
     #    if i.get('state') == key:
@@ -15,3 +18,9 @@ def sort_by_date(list_dictionaries: list, keys: bool = True) -> list:
     # sort_list = sorted(list_dictionaries, key=lambda list_dictionaries: list_dictionaries['date'], reverse=keys)
     # return sort_list
     return sorted(list_dictionaries, key=lambda list_dictionaries: list_dictionaries["date"], reverse=keys)
+
+
+print(sort_by_date([{'id': 41428829, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
+{'id': 939719570, 'state': 'EXECUTED', 'date': '2019-07-03T18:35:29.512364'},
+{'id': 594226727, 'state': 'CANCELED', 'date': '2019-07-03T18:35:29.512364'},
+{'id': 615064591, 'state': 'CANCELED', 'date': '2019-07-03T18:35:29.512364'}]))

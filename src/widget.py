@@ -1,4 +1,5 @@
-import masks
+from src.masks import get_mask_card_number, get_mask_account
+from datetime import datetime
 
 
 def mask_account_card(cart: str) -> str:
@@ -12,14 +13,20 @@ def mask_account_card(cart: str) -> str:
         elif i.isalpha():
             name_cart += i + " "
     if len(numer_cart) == 16:
-        return str(name_cart + masks.get_mask_card_number(int(numer_cart)))
+        return str(name_cart + get_mask_card_number(int(numer_cart)))
+    elif len(numer_cart) == 20:
+        return str(name_cart + get_mask_account(int(numer_cart)))
     else:
-        return str(name_cart + masks.get_mask_account(int(numer_cart)))
+       raise ValueError('Введен неправильный номер')
 
 
-def get_date(date: str) -> str:
+
+def get_date(date_sting: str) -> str:
     """
     функция принимает на вход строку с датой в формате "2024-03-11T02:26:18.671407"  и возвращает
     строку с датой в формате "ДД.ММ.ГГГГ" ("11.03.2024").
     """
-    return f"{date[8:10]}.{date[5:7]}.{date[:4]}"
+    if len(date_sting) == 0:
+        raise ValueError('Отсутствует дата')
+    date_obj = datetime.fromisoformat(date_sting).date()
+    return date_obj.strftime('%d.%m.%Y')
