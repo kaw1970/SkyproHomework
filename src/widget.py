@@ -17,8 +17,7 @@ def mask_account_card(cart: str) -> str:
     elif len(numer_cart) == 20:
         return str(name_cart + get_mask_account(int(numer_cart)))
     else:
-       raise ValueError('Введен неправильный номер')
-
+        raise ValueError("Введен неправильный номер")
 
 
 def get_date(date_sting: str) -> str:
@@ -27,6 +26,6 @@ def get_date(date_sting: str) -> str:
     строку с датой в формате "ДД.ММ.ГГГГ" ("11.03.2024").
     """
     if len(date_sting) == 0:
-        raise ValueError('Отсутствует дата')
+        raise ValueError("Отсутствует дата")
     date_obj = datetime.fromisoformat(date_sting).date()
-    return date_obj.strftime('%d.%m.%Y')
+    return date_obj.strftime("%d.%m.%Y")
