@@ -78,9 +78,16 @@ transactions = (
 
 def filter_by_currency(transactions, currency_code="USD"):
     """ Функция выдает транзакции, где валюта операции соответствует заданной."""
-    for i in transactions:
-        if i.get('operationAmount').get('currency').get('code') == currency_code:
-            yield i
+    try:
+        for i in transactions:
+            if i.get('operationAmount').get('currency').get('code') == currency_code:
+                yield i
+    except StopIteration:
+        if transactions == []:
+            return 'Нет транзакций'
+
+
+
 
 
 def transaction_descriptions(transactions):
@@ -95,16 +102,16 @@ def card_number_generator(start, stop):
     for x in range(start, stop + 1):
         number_zero = '0000000000000000'
         card_number = number_zero[:-len(str(x))] + str(x)
-        yield f'{card_number[:5]} {card_number[5:9]} {card_number[9:13]} {card_number[12:]}'
+        yield f'{card_number[:4]} {card_number[4:8]} {card_number[8:12]} {card_number[12:]}'
 
 
-# usd_transactions = filter_by_currency(transactions, "USD")
-# for _ in range(2):
-#    print(next(usd_transactions))
+usd_transactions = filter_by_currency([], "RUB")
+for _ in range(2):
+    print(next(usd_transactions))
 
-# descriptions = transaction_descriptions(transactions)
-# for _ in range(5):
+#descriptions = transaction_descriptions(transactions)
+#for _ in range(1):
 #    print(next(descriptions))
 
-# for card_number in card_number_generator(95, 106):
+#for card_number in card_number_generator(9999999999999999, 9999999999999999):
 #    print(card_number)
