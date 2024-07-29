@@ -91,13 +91,13 @@ def test_filter_by_currency():
 def test_filter_by_currency_zero():
     with pytest.raises(StopIteration) as exc_info:
         generator = filter_by_currency([])
-        assert next(generator) == 'Нет транзакций'
+        assert next(generator) == exc_info
 
 
 def test_filter_by_currency_eu():
     with pytest.raises(StopIteration) as exc_info:
         generator = filter_by_currency(transactions, 'EU')
-        assert next(generator) == 'Кода валюты нет в транзакциях'
+        assert next(generator) == exc_info
 
 
 def test_transaction_descriptions():
@@ -114,7 +114,7 @@ def test_transaction_descriptions_3(index, expected):
 def test_transaction_descriptions_zero():
     with pytest.raises(StopIteration) as exc_info:
         a = transaction_descriptions([])
-        assert next(a) == 'Нет транзакций'
+        assert next(a) == exc_info
 
 
 def test_card_number_generator():
