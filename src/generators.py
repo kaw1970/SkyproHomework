@@ -1,27 +1,24 @@
+import sys
 from typing import Generator, Any
 
 
-def filter_by_currency(transactions: list, currency_code: str = "USD") -> Generator[Any, Any, str]:
+def filter_by_currency(transactions: list, currency_code: str = "USD") -> Generator[Any, Any, Any]:
     """Функция выдает транзакции, где валюта операции соответствует заданной."""
-    try:
-        for i in transactions:
-            if i.get("operationAmount").get("currency").get("code") == currency_code:
-                yield i
-    except StopIteration:
-        if transactions == []:
-            return "Нет транзакций"
-        elif i.get("operationAmount").get("currency").get("code") != currency_code:
-            return "Кода валюты нет в транзакциях"
+    if transactions == []:
+        sys.exit("Нет транзакций")
+    for i in transactions:
+        if i.get("operationAmount").get("currency").get("code") != currency_code:
+            sys.exit("В транзакциях нет такого кода")
+        elif i.get("operationAmount").get("currency").get("code") == currency_code:
+            yield i
 
 
-def transaction_descriptions(transactions: list) -> Generator[str, Any, str]:
+def transaction_descriptions(transactions: list) -> Generator[Any, Any, Any]:
     """Функция принимает список словарей с транзакциями и возвращает описание каждой операции по очереди."""
-    try:
-        for description_operation in transactions:
-            yield description_operation.get("description")
-    except StopIteration:
-        if transactions == []:
-            return "Нет транзакций"
+    if not transactions:
+        sys.exit("Нет транзакций")
+    for description_operation in transactions:
+        yield description_operation.get("description")
 
 
 def card_number_generator(start: int, stop: int) -> Generator[str, Any, None]:

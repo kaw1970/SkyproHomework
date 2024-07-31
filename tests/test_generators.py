@@ -89,13 +89,13 @@ def test_filter_by_currency():
 
 
 def test_filter_by_currency_zero():
-    with pytest.raises(StopIteration) as exc_info:
+    with pytest.raises(SystemExit, match="Нет транзакций") as exc_info:
         generator = filter_by_currency([])
         assert next(generator) == exc_info
 
 
 def test_filter_by_currency_eu():
-    with pytest.raises(StopIteration) as exc_info:
+    with pytest.raises(SystemExit, match="В транзакциях нет такого кода") as exc_info:
         generator = filter_by_currency(transactions, 'EU')
         assert next(generator) == exc_info
 
@@ -112,7 +112,7 @@ def test_transaction_descriptions_3(index, expected):
 
 
 def test_transaction_descriptions_zero():
-    with pytest.raises(StopIteration) as exc_info:
+    with pytest.raises(SystemExit, match="Нет транзакций") as exc_info:
         a = transaction_descriptions([])
         assert next(a) == exc_info
 
