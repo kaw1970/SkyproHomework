@@ -13,7 +13,3 @@ def transactions_excel(file_path: str) -> list[Dict[str, Any]]:
     """A function for reading financial transactions from Excel."""
     df = pd.read_excel(file_path)
     return df.to_dict(orient='records')
-
-
-print(transactions_csv('../data/transactions.csv'))
-#print(transactions_excel('../data/transactions_excel.xlsx'))

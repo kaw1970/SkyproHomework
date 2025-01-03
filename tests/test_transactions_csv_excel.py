@@ -1,19 +1,31 @@
 from unittest.mock import patch
 
-import pytest
+import pandas as pd
 
 
 from src.transactions_csv_excel import transactions_excel, transactions_csv
 
 
-@patch('pandas.read_csv')
-def test_transactions_csv(mock):
-    mock.return_value.to_dict.return_value = [{'id': 650703.0, 'state': 'EXECUTED', 'date': '2023-09-05T11:30:32Z',
-                                               'amount': 16210.0, 'currency_name': 'Sol', 'currency_code': 'PEN',
-                                               'from': 'Счет 58803664561298323391',
-                                               'to': 'Счет 39745660563456619397', 'description': 'Перевод организации'},
-                                              {'id': 3598919.0, 'state': 'EXECUTED', 'date': '2020-12-06T23:00:58Z',
-                                               'amount': 29740.0, 'currency_name': 'Peso', 'currency_code': 'COP',
-                                               'from': 'Discover 3172601889670065',
-                                               'to': 'Discover 0720428384694643',
-                                               'description': 'Перевод с карты на карту'}]
+def test_transactions_csv():
+    with patch('pandas.read_csv') as mock_read_csv:
+        # Подготовка пустого DataFrame
+        mock_data = pd.DataFrame(columns=['date', 'amount', 'description'])
+        # Настройка mock, чтобы он возвращал наш пустой DataFrame
+        mock_read_csv.return_value = mock_data
+        # Вызов функции
+        result = transactions_csv('dummy_file.csv')
+        # Ожидаемый результат
+        expected_result = []
+        # Проверка результата
+        assert result == expected_result
+        mock_read_csv.assert_called_once_with('dummy_file.csv', sep=';')
+
+
+def test_transactions_excel():
+    with patch('pandas.read_excel') as mock_read_excel:
+        mock_data = pd.DataFrame(columns=['date', 'amount', 'description'])
+        mock_read_excel.return_value = mock_data
+        result = transactions_excel('dummy_file.excel')
+        expected_result = []
+        assert result == expected_result
+        mock_read_excel.assert_called_once_with('dummy_file.excel')
