@@ -1,14 +1,17 @@
 import json
 import logging
+import os
 from json import JSONDecodeError
 from typing import Any
 
 from src.external_api import currency_conversion
 
+path_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), "logs", "utils_log.log")
 logging.basicConfig(
     level=logging.INFO,
     format="%(levelname)s: %(filename)s: %(funcName)s %(lineno)s: %(asctime)s - %(message)s",
-    filename="../logs/utils_log.log",
+    filename=path_file,
+    # filename="../logs/utils_log.log",
     filemode="w",
     )
 financial_transactions_logger = logging.getLogger()
@@ -44,3 +47,9 @@ def transaction_amount(trans: dict, currency: str = "RUB") -> Any:
         amount = currency_conversion(trans)
         transaction_amount_logger.info("Код валюты транзакции не RUB, произведена конвертация")
     return amount
+
+
+if __name__=='__main__':
+    path_to_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "operations.json")
+    trans = financial_transactions('../data/operations.json')
+    print(trans)
