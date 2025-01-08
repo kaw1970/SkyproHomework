@@ -48,8 +48,3 @@ def transaction_amount(trans: dict, currency: str = "RUB") -> Any:
         transaction_amount_logger.info("Код валюты транзакции не RUB, произведена конвертация")
     return amount
 
-
-if __name__=='__main__':
-    path_to_file = os.path.join(os.path.dirname(os.path.dirname(__file__)), "data", "operations.json")
-    trans = financial_transactions('../data/operations.json')
-    print(trans)
