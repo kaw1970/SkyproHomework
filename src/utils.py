@@ -47,4 +47,3 @@ def transaction_amount(trans: dict, currency: str = "RUB") -> Any:
         amount = currency_conversion(trans)
         transaction_amount_logger.info("Код валюты транзакции не RUB, произведена конвертация")
     return amount
-
