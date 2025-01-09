@@ -1,5 +1,6 @@
 # coding: utf-8
 import re
+from collections import Counter
 
 
 def filter_banking_transactions_by_description(banking_description: list, search_bar: str) -> list:
@@ -15,14 +16,16 @@ def filter_banking_transactions_by_description(banking_description: list, search
 
 
 def filter_banking_description(banking_description: list, categories_operations: list) -> dict:
-    """Функция принимает список словарей с данными о банковских операциях и список категорий операций, а возвращает 
-    словарь, в котором ключи — это названия категорий, а значения — это количество операций в каждой категории. 
+    """Функция принимает список словарей с данными о банковских операциях и список категорий операций, а возвращает
+    словарь, в котором ключи — это названия категорий, а значения — это количество операций в каждой категории.
     Категории операций хранятся в поле description."""
-    result = {}
+
+    string = []
     for categories in categories_operations:
         pattern = categories
         description = str(banking_description)
         string_ = re.findall(pattern, description, flags=re.IGNORECASE)
-        values = len(string_)
-        result[categories] = values
+        string = string + string_
+
+    result = Counter(string)
     return result

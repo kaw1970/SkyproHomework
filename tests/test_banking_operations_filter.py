@@ -54,6 +54,7 @@ def test_empty_list_transactions():
     result = filter_banking_transactions_by_description([], "groceries")
     assert result == [], "Тест не пройден: ожидается []"
 
+
 def test_no_matches_transactions():
     """Проверяет, что функция возвращает пустой список, если нет совпадений с поисковой строкой."""
     banking_description = [
@@ -62,6 +63,7 @@ def test_no_matches_transactions():
     ]
     result = filter_banking_transactions_by_description(banking_description, "utilities")
     assert result == [], "Тест не пройден: ожидается []"
+
 
 def test_single_match_transactions():
     """Проверяет, что функция возвращает правильный словарь, если есть одно совпадение."""
@@ -72,6 +74,7 @@ def test_single_match_transactions():
     result = filter_banking_transactions_by_description(banking_description, "groceries")
     assert result == ["{'description': 'Payment for groceries'}"], \
         "Тест не пройден: ожидается ['{\'description\': \'Payment for groceries\'}']"
+
 
 def test_multiple_matches_transactions(_transactions):
     """Проверяет, что функция возвращает все совпадения, если их несколько."""
@@ -86,6 +89,7 @@ def test_multiple_matches_transactions(_transactions):
         "{'description': 'Transfer to groceries'}"
     ]
     assert result == expected, f"Тест не пройден: ожидается {expected}"
+
 
 def test_case_insensitivity_transactions():
     """Проверяет, что функция корректно работает с учетом регистра символов."""
