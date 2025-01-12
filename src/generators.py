@@ -2,15 +2,17 @@ import sys
 from typing import Any, Generator
 
 
-def filter_by_currency(transactions: list, currency_code: str = "USD") -> Generator[Any, Any, Any]:
+def filter_by_currency(transactions: list, currency_code: str = "USD") -> list:
     """Функция выдает транзакции, где валюта операции соответствует заданной."""
-    if transactions == []:
-        sys.exit("Нет транзакций")
+    # if transactions == []:
+    #    sys.exit("Нет транзакций")
+    transactions_code = []
     for i in transactions:
-        if i.get("operationAmount").get("currency").get("code") != currency_code:
-            sys.exit("В транзакциях нет такого кода")
-        elif i.get("operationAmount").get("currency").get("code") == currency_code:
-            yield i
+        if i.get("operationAmount", {}).get("currency", {}).get("code", {}) == currency_code:
+            transactions_code.append(i)
+        elif i.get('currency_code') == currency_code:
+            transactions_code.append(i)
+    return transactions_code
 
 
 def transaction_descriptions(transactions: list) -> Generator[Any, Any, Any]:
